@@ -42,8 +42,24 @@ const NUMERO_WHATSAPP = "573114667501";
       cantidad.value = 0;
       cantidad.disabled = true;
       item.classList.remove("marcado");
+      const tamanoSel = item.querySelector(".tamano");
+      if (tamanoSel){ tamanoSel.selectedIndex = 0; toggleGuarnicion(tamanoSel); }
     }
     calcularTotal();
+  }
+
+  function toggleGuarnicion(select){
+    const item = select.closest(".item");
+    if (!item) return;
+    const wrap = item.querySelector(".guarnicion-wrap");
+    if (!wrap) return;
+    const opt = select.options[select.selectedIndex];
+    const esCombo = opt && opt.dataset.combo === "1";
+    wrap.style.display = esCombo ? "block" : "none";
+    if (!esCombo){
+      const g = wrap.querySelector(".guarnicion");
+      if (g) g.value = "";
+    }
   }
 
   function toggleDescripcion(checkbox){
@@ -145,11 +161,30 @@ const NUMERO_WHATSAPP = "573114667501";
       if (tamanoSel) linea += ` (${tamanoSel.options[tamanoSel.selectedIndex].text})`;
       const saborSel = item.querySelector(".sabor");
       if (saborSel) linea += ` - Sabor: ${saborSel.value}`;
+      const guarnicionSel = item.querySelector(".guarnicion");
+      if (guarnicionSel && guarnicionSel.value) linea += ` - Guarnición: ${guarnicionSel.value}`;
       platos.push(linea);
     });
 
     if (platos.length === 0){
       alert("Por favor selecciona al menos un producto.");
+      return;
+    }
+
+    let guarnicionFaltante = false;
+    document.querySelectorAll(".check-plato").forEach(cb => {
+      if (!cb.checked) return;
+      const item = cb.closest(".item");
+      const cantidad = Number(item.querySelector(".cantidad")?.value) || 0;
+      if (cantidad <= 0) return;
+      const wrap = item.querySelector(".guarnicion-wrap");
+      if (wrap && wrap.style.display === "block"){
+        const guarnicionSel = item.querySelector(".guarnicion");
+        if (!guarnicionSel || !guarnicionSel.value) guarnicionFaltante = true;
+      }
+    });
+    if (guarnicionFaltante){
+      alert("Por favor elige la guarnición de cada combo antes de enviar el pedido.");
       return;
     }
 

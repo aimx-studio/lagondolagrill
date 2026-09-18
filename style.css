@@ -164,7 +164,7 @@
   }
   .item:hover{background:rgba(217,164,65,.04);}
   .item:first-child{border-top:none;}
-  .item.marcado{ background:rgba(217,164,65,.09); }
+  .item.marcado{ background:rgba(217,164,65,.04); }
 
   .item-linea{
     display:flex;
@@ -227,6 +227,16 @@
     color:var(--text-dim);
     line-height:1.4;
     transition: all .3s ease;
+  }
+
+  .foto-plato{
+    display:block;
+    width:100%;
+    max-width:260px;
+    border-radius:10px;
+    margin:8px 0 10px;
+    border:1px solid rgba(217,164,65,.5);
+    box-shadow: 0 4px 14px rgba(0,0,0,.4), 0 0 0 1px rgba(217,164,65,.15);
   }
 
   /* FORM (estructura intacta) */
@@ -385,4 +395,23 @@
   .visually-hidden{
     position:absolute; width:1px; height:1px;
     overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
+  }
+
+  .guarnicion-wrap{
+    margin:6px 0 4px 26px;
+  }
+  .guarnicion-wrap label{
+    font-size:12px;
+    color:var(--text-dim);
+    display:block;
+    margin-bottom:4px;
+  }
+  .guarnicion-wrap select{
+    width:100%;
+    background:#150606;
+    color:var(--text);
+    border:1px solid rgba(217,164,65,.4);
+    border-radius:6px;
+    padding:6px;
+    font-size:13px;
   }
