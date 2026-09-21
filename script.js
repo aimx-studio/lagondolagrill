@@ -48,6 +48,8 @@ const NUMERO_WHATSAPP = "573114667501";
     calcularTotal();
   }
 
+  const GUARNICIONES = ["Papa a la francesa", "Yuca frita", "Chips de plátano", "Papas en casquitos"];
+
   function toggleGuarnicion(select){
     const item = select.closest(".item");
     if (!item) return;
@@ -55,12 +57,69 @@ const NUMERO_WHATSAPP = "573114667501";
     if (!wrap) return;
     const opt = select.options[select.selectedIndex];
     const esCombo = opt && opt.dataset.combo === "1";
+
+    // guarda lo que ya había elegido (por combo y por posición)
+    const previos = {};
+    wrap.querySelectorAll(".guarnicion").forEach(g => {
+      if (g.dataset.k) previos[g.dataset.k] = g.value;
+    });
+    wrap.querySelectorAll(".combo-bloque, .guarnicion").forEach(el => el.remove());
+
     wrap.style.display = esCombo ? "block" : "none";
-    if (!esCombo){
-      const g = wrap.querySelector(".guarnicion");
-      if (g) g.value = "";
+    if (!esCombo) return;
+
+    let n = 1, ml = 250;
+    if (opt.text.includes("Personal")){ n = 2; ml = 400; }
+    else if (opt.text.includes("Súper")){ n = 3; ml = 600; }
+
+    const cantidad = Math.max(1, Math.floor(Number(item.querySelector(".cantidad")?.value)) || 1);
+
+    const label = wrap.querySelector("label");
+    if (label){
+      label.textContent = "🥤 Cada combo incluye gaseosa de " + ml + " ml (o limonada / té frío con $1.000 menos) + " +
+        n + (n === 1 ? " guarnición" : " guarniciones") + ". Elige:";
+    }
+
+    for (let c = 1; c <= cantidad; c++){
+      const bloque = document.createElement("div");
+      bloque.className = "combo-bloque";
+      bloque.style.cssText = "margin-top:8px;padding:8px 10px;border:1px solid rgba(217,164,65,.25);border-radius:8px;";
+      if (cantidad > 1){
+        const titulo = document.createElement("div");
+        titulo.textContent = "Combo " + c + " de " + cantidad;
+        titulo.style.cssText = "font-weight:700;font-size:12px;color:var(--gold-light);margin-bottom:6px;";
+        bloque.appendChild(titulo);
+      }
+      for (let s = 1; s <= n; s++){
+        const sel = document.createElement("select");
+        sel.className = "guarnicion";
+        sel.dataset.k = c + "-" + s;
+        sel.style.marginTop = s > 1 ? "6px" : "0";
+        sel.innerHTML = '<option value="">-- Selecciona --</option>' +
+          GUARNICIONES.map(x => '<option>' + x + '</option>').join("");
+        sel.value = previos[c + "-" + s] || "";
+        bloque.appendChild(sel);
+      }
+      wrap.appendChild(bloque);
     }
   }
+
+  // al cambiar la cantidad, se rehacen los bloques de guarniciones
+  document.addEventListener("input", function(e){
+    if (!e.target.classList || !e.target.classList.contains("cantidad")) return;
+    const item = e.target.closest(".item");
+    const tamanoSel = item && item.querySelector(".tamano");
+    if (tamanoSel) toggleGuarnicion(tamanoSel);
+  });
+
+  // al tocar la cantidad se selecciona el número: escribes encima sin borrar
+  function seleccionarCantidad(e){
+    const el = e.target;
+    if (!el.classList || !el.classList.contains("cantidad")) return;
+    setTimeout(() => { try { el.select(); } catch(err){} }, 0);
+  }
+  document.addEventListener("focusin", seleccionarCantidad);
+  document.addEventListener("click", seleccionarCantidad);
 
   function toggleDescripcion(checkbox){
     const item = checkbox.closest(".item");
@@ -161,8 +220,14 @@ const NUMERO_WHATSAPP = "573114667501";
       if (tamanoSel) linea += ` (${tamanoSel.options[tamanoSel.selectedIndex].text})`;
       const saborSel = item.querySelector(".sabor");
       if (saborSel) linea += ` - Sabor: ${saborSel.value}`;
-      const guarnicionSel = item.querySelector(".guarnicion");
-      if (guarnicionSel && guarnicionSel.value) linea += ` - Guarnición: ${guarnicionSel.value}`;
+      const bloques = [...item.querySelectorAll(".combo-bloque")];
+      if (bloques.length){
+        const partes = bloques.map((b, i) => {
+          const g = [...b.querySelectorAll(".guarnicion")].map(s => s.value).filter(Boolean).join(" + ");
+          return bloques.length > 1 ? `Combo ${i + 1}: ${g}` : g;
+        });
+        linea += ` - Guarnición: ${partes.join(" | ")}`;
+      }
       platos.push(linea);
     });
 
@@ -179,8 +244,8 @@ const NUMERO_WHATSAPP = "573114667501";
       if (cantidad <= 0) return;
       const wrap = item.querySelector(".guarnicion-wrap");
       if (wrap && wrap.style.display === "block"){
-        const guarnicionSel = item.querySelector(".guarnicion");
-        if (!guarnicionSel || !guarnicionSel.value) guarnicionFaltante = true;
+        const sels = item.querySelectorAll(".guarnicion");
+        if (sels.length === 0 || [...sels].some(g => !g.value)) guarnicionFaltante = true;
       }
     });
     if (guarnicionFaltante){
