@@ -45,7 +45,38 @@ const NUMERO_WHATSAPP = "573114667501";
       const tamanoSel = item.querySelector(".tamano");
       if (tamanoSel){ tamanoSel.selectedIndex = 0; toggleGuarnicion(tamanoSel); }
     }
+    toggleMejoraChorizo(item);
     calcularTotal();
+  }
+
+  function toggleMejoraChorizo(item){
+    const wrap = item.querySelector(".mejora-wrap");
+    if (!wrap) return;
+    const cb = item.querySelector(".check-plato");
+    const cantidadInput = item.querySelector(".cantidad");
+    const cantidad = Math.max(1, Math.floor(Number(cantidadInput?.value)) || 1);
+
+    if (!cb || !cb.checked){
+      wrap.style.display = "none";
+      wrap.querySelectorAll(".mejora-fila").forEach(f => f.remove());
+      return;
+    }
+    wrap.style.display = "block";
+
+    const previos = {};
+    wrap.querySelectorAll(".mejora-fila input").forEach(inp => {
+      previos[inp.dataset.unidad] = inp.checked;
+    });
+    wrap.querySelectorAll(".mejora-fila").forEach(f => f.remove());
+
+    for (let u = 1; u <= cantidad; u++){
+      const fila = document.createElement("label");
+      fila.className = "mejora-fila";
+      fila.innerHTML = '<input type="checkbox" class="check-mejora-chorizo" data-unidad="' + u + '" onchange="calcularTotal()"> ' +
+        (cantidad > 1 ? "Perro " + u + ": " : "") + "Cambiar por chorizo artesanal (+$5.000)";
+      fila.querySelector("input").checked = !!previos[u];
+      wrap.appendChild(fila);
+    }
   }
 
   const GUARNICIONES = ["Papa a la francesa", "Yuca frita", "Chips de plátano", "Papas en casquitos"];
@@ -104,12 +135,14 @@ const NUMERO_WHATSAPP = "573114667501";
     }
   }
 
-  // al cambiar la cantidad, se rehacen los bloques de guarniciones
+  // al cambiar la cantidad, se rehacen los bloques de guarniciones y de chorizo
   document.addEventListener("input", function(e){
     if (!e.target.classList || !e.target.classList.contains("cantidad")) return;
     const item = e.target.closest(".item");
-    const tamanoSel = item && item.querySelector(".tamano");
+    if (!item) return;
+    const tamanoSel = item.querySelector(".tamano");
     if (tamanoSel) toggleGuarnicion(tamanoSel);
+    toggleMejoraChorizo(item);
   });
 
   // al tocar la cantidad se selecciona el número: escribes encima sin borrar
@@ -149,6 +182,9 @@ const NUMERO_WHATSAPP = "573114667501";
         precio = Number(cb.dataset.precio) || 0;
       }
       subtotal += precio * cantidad;
+
+      const chorizosSeleccionados = item.querySelectorAll(".check-mejora-chorizo:checked").length;
+      subtotal += 5000 * chorizosSeleccionados;
 
       if (item.dataset.tipo === "bandeja"){
         unidadesEmpaque += cantidad;
@@ -220,6 +256,13 @@ const NUMERO_WHATSAPP = "573114667501";
       if (tamanoSel) linea += ` (${tamanoSel.options[tamanoSel.selectedIndex].text})`;
       const saborSel = item.querySelector(".sabor");
       if (saborSel) linea += ` - Sabor: ${saborSel.value}`;
+      const chorizoBoxes = [...item.querySelectorAll(".check-mejora-chorizo")];
+      const chorizoCount = chorizoBoxes.filter(c => c.checked).length;
+      if (chorizoCount > 0){
+        linea += cantidad > 1
+          ? ` — ${chorizoCount} de ${cantidad} con chorizo artesanal (+$5.000 c/u)`
+          : ` + Chorizo artesanal (+$5.000)`;
+      }
       const bloques = [...item.querySelectorAll(".combo-bloque")];
       if (bloques.length){
         const partes = bloques.map((b, i) => {
