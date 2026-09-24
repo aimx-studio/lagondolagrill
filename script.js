@@ -1,4 +1,16 @@
-const NUMERO_WHATSAPP = "573114667501";
+const NUMERO_WHATSAPP_MEDIODIA = "573102730055"; // 11:45am - 4:00pm
+const NUMERO_WHATSAPP_TARDE = "573114667501"; // 4:00pm - 12:00am
+
+function obtenerNumeroWhatsApp(){
+  const ahora = new Date();
+  const minutos = ahora.getHours() * 60 + ahora.getMinutes();
+  const inicioMediodia = 11 * 60 + 45; // 11:45am
+  const finMediodia = 16 * 60; // 4:00pm
+  if (minutos >= inicioMediodia && minutos < finMediodia){
+    return NUMERO_WHATSAPP_MEDIODIA;
+  }
+  return NUMERO_WHATSAPP_TARDE;
+}
 
   function elegirSeccion(tipo){
     document.getElementById("landingScreen").style.display = "none";
@@ -237,6 +249,7 @@ const NUMERO_WHATSAPP = "573114667501";
   function toggleTipoPago(){
     const tipo = document.getElementById("tipoPago").value;
     document.getElementById("efectivoField").style.display = (tipo === "Efectivo") ? "block" : "none";
+    document.getElementById("avisoPagoParcial").style.display = tipo ? "block" : "none";
   }
 
   let enviando = false;
@@ -346,5 +359,5 @@ const NUMERO_WHATSAPP = "573114667501";
     enviando = true;
     setTimeout(() => { btn.disabled = false; enviando = false; }, 5000);
 
-    window.location.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + encodeURIComponent(mensaje);
+    window.location.href = "https://wa.me/" + obtenerNumeroWhatsApp() + "?text=" + encodeURIComponent(mensaje);
   });
