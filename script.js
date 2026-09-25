@@ -12,7 +12,7 @@ function obtenerNumeroWhatsApp(){
   return NUMERO_WHATSAPP_TARDE;
 }
 
-  function elegirSeccion(tipo){
+  function mostrarVistaMenu(tipo){
     document.getElementById("landingScreen").style.display = "none";
     document.getElementById("menuContent").style.display = "block";
     document.getElementById("grupoRapidas").style.display = (tipo === "rapidas") ? "block" : "none";
@@ -27,11 +27,30 @@ function obtenerNumeroWhatsApp(){
     window.scrollTo(0,0);
   }
 
-  function volverLanding(){
+  function mostrarVistaLanding(){
     document.getElementById("menuContent").style.display = "none";
     document.getElementById("landingScreen").style.display = "block";
     window.scrollTo(0,0);
   }
+
+  function elegirSeccion(tipo){
+    mostrarVistaMenu(tipo);
+    history.pushState({ vista: "menu", tipo: tipo }, "");
+  }
+
+  function volverLanding(){
+    history.back();
+  }
+
+  window.addEventListener("popstate", function(e){
+    if (e.state && e.state.vista === "menu"){
+      mostrarVistaMenu(e.state.tipo);
+    } else {
+      mostrarVistaLanding();
+    }
+  });
+
+  history.replaceState({ vista: "landing" }, "");
 
   function toggleMenu(titulo){
     const seccion = titulo.nextElementSibling;
@@ -146,6 +165,21 @@ function obtenerNumeroWhatsApp(){
       wrap.appendChild(bloque);
     }
   }
+
+  function actualizarTextosCombo(){
+    document.querySelectorAll('select.tamano option[data-combo="1"]').forEach(opt => {
+      if (opt.dataset.comboActualizado) return;
+      let detalle = "(1 guarnición + gaseosa 250ml)";
+      if (opt.text.includes("Súper")){
+        detalle = "(3 guarniciones + gaseosa 600ml)";
+      } else if (opt.text.includes("Personal")){
+        detalle = "(2 guarniciones + gaseosa 400ml)";
+      }
+      opt.text = opt.text.replace(/(\$[\d.,]+)/, detalle + " $1");
+      opt.dataset.comboActualizado = "1";
+    });
+  }
+  actualizarTextosCombo();
 
   // al cambiar la cantidad, se rehacen los bloques de guarniciones y de chorizo
   document.addEventListener("input", function(e){
