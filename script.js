@@ -277,6 +277,17 @@ function obtenerNumeroWhatsApp(){
       document.getElementById("direccion").required = false;
       document.getElementById("numeroMesa").required = false;
     }
+
+    const opcionEfectivo = document.getElementById("opcionEfectivo");
+    const tipoPagoSelect = document.getElementById("tipoPago");
+    const permiteEfectivo = (tipo === "Comer dentro del local");
+    opcionEfectivo.hidden = !permiteEfectivo;
+    opcionEfectivo.disabled = !permiteEfectivo;
+    if (!permiteEfectivo && tipoPagoSelect.value === "Efectivo"){
+      tipoPagoSelect.value = "";
+      toggleTipoPago();
+    }
+
     calcularTotal();
   }
 
@@ -355,7 +366,7 @@ function obtenerNumeroWhatsApp(){
     const empaque = document.getElementById("empaqueDisplay").innerText;
     const total = document.getElementById("total").innerText;
 
-    let mensaje = `🛵 *NUEVO PEDIDO - LA GÓNDOLA GRILL*\n\n`;
+    let mensaje = `🛵 NUEVO PEDIDO\n\n`;
     mensaje += `👤 Nombre: ${nombre}\n`;
     mensaje += `📞 WhatsApp: ${telefono}\n\n`;
     mensaje += `🍽️ *Pedido:*\n${platos.join("\n")}\n\n`;
@@ -365,8 +376,12 @@ function obtenerNumeroWhatsApp(){
     mensaje += `💰 Pago: ${tipoPago}\n`;
     if (tipoPago === "Efectivo" && efectivoMonto) mensaje += `💵 Paga con: ${efectivoMonto}\n`;
     if (especificaciones) mensaje += `📒 Especificaciones: ${especificaciones}\n`;
-    mensaje += `\nSubtotal: ${subtotal}`;
-    mensaje += `\nCosto de empaque: ${empaque}`;
+
+    const empaqueValor = Number(document.getElementById("empaquePedido").value) || 0;
+    if (empaqueValor > 0){
+      mensaje += `\nSubtotal: ${subtotal}`;
+      mensaje += `\nCosto de empaque: ${empaque}`;
+    }
     mensaje += `\n💸 *Total: ${total}*`;
 
     // ===== Registro en Google Sheets (silencioso, no bloquea el envío a WhatsApp) =====
@@ -382,11 +397,15 @@ function obtenerNumeroWhatsApp(){
     formData.append('entry.2008181289', document.getElementById("empaquePedido").value);
     formData.append('entry.861860538', document.getElementById("totalPedido").value);
 
-    fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse', {
-      method: 'POST',
-      mode: 'no-cors',
-      body: formData
-    });
+    if (navigator.sendBeacon){
+      navigator.sendBeacon('https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse', formData);
+    } else {
+      fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+    }
 
     const btn = document.querySelector(".btn");
     btn.disabled = true;
