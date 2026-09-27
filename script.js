@@ -385,27 +385,31 @@ function obtenerNumeroWhatsApp(){
     mensaje += `\n💸 *Total: ${total}*`;
 
     // ===== Registro en Google Sheets (silencioso, no bloquea el envío a WhatsApp) =====
-    const formData = new FormData();
-    formData.append('entry.1010418838', nombre);
-    formData.append('entry.918253492', telefono);
-    formData.append('entry.978353877', platos.join("\n"));
-    formData.append('entry.1807804644', tipoEntrega);
-    formData.append('entry.1988956583', direccion || numeroMesa || '');
-    formData.append('entry.521689781', tipoPago);
-    formData.append('entry.720280543', especificaciones || '');
-    formData.append('entry.856852556', document.getElementById("subtotalPedido").value);
-    formData.append('entry.2008181289', document.getElementById("empaquePedido").value);
-    formData.append('entry.861860538', document.getElementById("totalPedido").value);
+    const datosPedido = new URLSearchParams();
+    datosPedido.append('entry.1010418838', nombre);
+    datosPedido.append('entry.918253492', telefono);
+    datosPedido.append('entry.978353877', platos.join("\n"));
+    datosPedido.append('entry.1807804644', tipoEntrega);
+    datosPedido.append('entry.1988956583', direccion || numeroMesa || '');
+    datosPedido.append('entry.521689781', tipoPago);
+    datosPedido.append('entry.720280543', especificaciones || '');
+    datosPedido.append('entry.856852556', document.getElementById("subtotalPedido").value);
+    datosPedido.append('entry.2008181289', document.getElementById("empaquePedido").value);
+    datosPedido.append('entry.861860538', document.getElementById("totalPedido").value);
 
-    if (navigator.sendBeacon){
-      navigator.sendBeacon('https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse', formData);
-    } else {
-      fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse', {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-    }
+    const urlFormulario = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse';
+
+    fetch(urlFormulario, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: datosPedido.toString()
+    }).catch(() => {
+      if (navigator.sendBeacon){
+        navigator.sendBeacon(urlFormulario, datosPedido);
+      }
+    });
 
     const btn = document.querySelector(".btn");
     btn.disabled = true;
