@@ -170,11 +170,15 @@ function obtenerNumeroWhatsApp(){
     document.querySelectorAll('select.tamano option[data-combo="1"]').forEach(opt => {
       if (opt.dataset.comboActualizado) return;
       let detalle = "(1 guarnición + gaseosa 250ml)";
+      let nombreCorto = "Combo Mini";
       if (opt.text.includes("Súper")){
         detalle = "(3 guarniciones + gaseosa 600ml)";
+        nombreCorto = "Combo Súper";
       } else if (opt.text.includes("Personal")){
         detalle = "(2 guarniciones + gaseosa 400ml)";
+        nombreCorto = "Combo Personal";
       }
+      opt.dataset.nombreCorto = nombreCorto;
       opt.text = opt.text.replace(/(\$[\d.,]+)/, detalle + " $1");
       opt.dataset.comboActualizado = "1";
     });
@@ -309,9 +313,13 @@ function obtenerNumeroWhatsApp(){
       const item = cb.closest(".item");
       const cantidad = Number(item.querySelector(".cantidad")?.value) || 0;
       if (cantidad <= 0) return;
-      let linea = `- ${cb.value} x${cantidad}`;
+      let linea = `• ${cantidad} × ${cb.value}`;
       const tamanoSel = item.querySelector(".tamano");
-      if (tamanoSel) linea += ` (${tamanoSel.options[tamanoSel.selectedIndex].text})`;
+      if (tamanoSel){
+        const opcionTamano = tamanoSel.options[tamanoSel.selectedIndex];
+        const textoTamano = opcionTamano.dataset.nombreCorto || opcionTamano.text;
+        linea += ` (${textoTamano})`;
+      }
       const saborSel = item.querySelector(".sabor");
       if (saborSel) linea += ` - Sabor: ${saborSel.value}`;
       const chorizoBoxes = [...item.querySelectorAll(".check-mejora-chorizo")];
@@ -369,7 +377,7 @@ function obtenerNumeroWhatsApp(){
     let mensaje = `🛵 NUEVO PEDIDO\n\n`;
     mensaje += `👤 Nombre: ${nombre}\n`;
     mensaje += `📞 WhatsApp: ${telefono}\n\n`;
-    mensaje += `🍽️ *Pedido:*\n${platos.join("\n")}\n\n`;
+    mensaje += `🍽️ *Pedido:*\n${platos.join("\n\n")}\n\n`;
     mensaje += `📦 Entrega: ${tipoEntrega}\n`;
     if (tipoEntrega === "A domicilio" && direccion) mensaje += `📍 Dirección: ${direccion} (domicilio a coordinar por WhatsApp)\n`;
     if (tipoEntrega === "Comer dentro del local" && numeroMesa) mensaje += `🔢 Mesa: ${numeroMesa}\n`;
