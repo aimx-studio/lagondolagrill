@@ -37,172 +37,73 @@
       <h2 onclick="toggleMenu(this)">🍔 Hamburguesas</h2>
       <div class="platos" style="display:none;">
 
-        <div class="item">
+        <div class="item" data-item-key="clasica">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaClasica" value="Hamburguesa Clásica" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Hamburguesa Clásica</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="11000">Solo $11.000</option>
-              <option value="18500" data-combo="1">Combo Mini $18.500</option>
-              <option value="21000" data-combo="1">Combo Personal $21.000</option>
-              <option value="22500" data-combo="1">Combo Súper $22.500</option>
-<option value="64500">Familiar $64.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaClasicaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaClasica" value="Hamburguesa Clásica" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Hamburguesa Clásica</span></label>
+            <input type="number" class="cantidad" name="HamburguesaClasicaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
-          <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hamburguesa-clasica.png" alt="Hamburguesa Clásica">100% carne de res o pollo, cuarto de libra, queso doble crema, jamón, vegetales frescos y salsa de la casa. Combo Familiar: 4 hamburguesas + jarra de 1.5 Lts o limonada + 2 porciones ($64.500).</div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
+          <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hamburguesa-clasica.png" alt="Hamburguesa Clásica">100% carne de res o pollo, cuarto de libra, queso doble crema, jamón, vegetales frescos y salsa de la casa.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="criolla">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaCriolla" value="Hamburguesa Criolla" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Hamburguesa Criolla</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="14800">Solo $14.800</option>
-              <option value="22300" data-combo="1">Combo Mini $22.300</option>
-              <option value="24800" data-combo="1">Combo Personal $24.800</option>
-              <option value="26300" data-combo="1">Combo Súper $26.300</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaCriollaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaCriolla" value="Hamburguesa Criolla" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Hamburguesa Criolla</span></label>
+            <input type="number" class="cantidad" name="HamburguesaCriollaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hamburguesa-criolla.png" alt="Hamburguesa Criolla">125 gr de carne 100% res, huevo frito, chimichurri de la casa, patacón, queso cheddar, tocineta, pan bimbo y cebolla morada.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="parrillera">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaParrillera" value="Hamburguesa Parrillera" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Hamburguesa Parrillera</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="16500">Solo $16.500</option>
-              <option value="23500" data-combo="1">Combo Mini $23.500</option>
-              <option value="26000" data-combo="1">Combo Personal $26.000</option>
-              <option value="27500" data-combo="1">Combo Súper $27.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaParrilleraCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaParrillera" value="Hamburguesa Parrillera" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Hamburguesa Parrillera</span></label>
+            <input type="number" class="cantidad" name="HamburguesaParrilleraCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hamburguesa-parrillera.png" alt="Hamburguesa Parrillera">125 gr de carne 100% res, chorizo santarrosano artesanal, queso cheddar, maíz tierno, tocineta, chimichurri de la casa, pan bimbo y cebolla morada.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="cheesepower">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaCheesePower" value="Hamburguesa Cheese Power" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Cheese Power</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="17000">Solo $17.000</option>
-              <option value="24500" data-combo="1">Combo Mini $24.500</option>
-              <option value="27000" data-combo="1">Combo Personal $27.000</option>
-              <option value="28500" data-combo="1">Combo Súper $28.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaCheesePowerCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaCheesePower" value="Hamburguesa Cheese Power" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Cheese Power</span></label>
+            <input type="number" class="cantidad" name="HamburguesaCheesePowerCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/chesse-powerd.png" alt="Cheese Power">Fusión de quesos cheddar, doble crema y campesino, 125 gr de carne 100% res, tocineta, pan bimbo, cebolla morada y salsa de la casa.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="doblecarne">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaDobleCarne" value="Hamburguesa Especialidad Doble Carne" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Doble Carne</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="19000">Solo $19.000</option>
-              <option value="26500" data-combo="1">Combo Mini $26.500</option>
-              <option value="29000" data-combo="1">Combo Personal $29.000</option>
-              <option value="30500" data-combo="1">Combo Súper $30.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaDobleCarneCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaDobleCarne" value="Hamburguesa Especialidad Doble Carne" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Doble Carne</span></label>
+            <input type="number" class="cantidad" name="HamburguesaDobleCarneCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/doble-carne.png" alt="Especialidad Doble Carne">Media libra 100% carne de res, pollo o mixta, pan Bimbo, vegetales frescos, tocineta, queso cheddar, queso doble crema, jamón ahumado y salsa de la casa.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="mexicana">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaEspecialidadMexicana" value="Hamburguesa Especialidad Mexicana" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Mexicana</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="21000">Solo $21.000</option>
-              <option value="28500" data-combo="1">Combo Mini $28.500</option>
-              <option value="31000" data-combo="1">Combo Personal $31.000</option>
-              <option value="32500" data-combo="1">Combo Súper $32.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaEspecialidadMexicanaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaEspecialidadMexicana" value="Hamburguesa Especialidad Mexicana" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Mexicana</span></label>
+            <input type="number" class="cantidad" name="HamburguesaEspecialidadMexicanaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/especialidad-mexicana.png" alt="Especialidad Mexicana">Media libra 100% carne de res, pollo o mixta, pan Bimbo, vegetales frescos, guacamole, jalapeños, totopos, tocineta, queso cheddar, queso doble crema, jamón ahumado y salsa de la casa.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="especialidadgondola">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HamburguesaEspecialidadGondola" value="Hamburguesa Especialidad Góndola" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Góndola</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="23000">Solo $23.000</option>
-              <option value="30500" data-combo="1">Combo Mini $30.500</option>
-              <option value="33000" data-combo="1">Combo Personal $33.000</option>
-              <option value="34500" data-combo="1">Combo Súper $34.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HamburguesaEspecialidadGondolaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HamburguesaEspecialidadGondola" value="Hamburguesa Especialidad Góndola" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Góndola</span></label>
+            <input type="number" class="cantidad" name="HamburguesaEspecialidadGondolaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/especialidad-gondola.png" alt="Especialidad Góndola">Media libra 100% carne de res o pollo, pan Bimbo, vegetales frescos, salsa chili (frijol, tocineta y chorizo), trocitos de chorizo, maíz tierno, totopos, tocineta, queso cheddar, queso doble crema, jamón ahumado y salsa de la casa.</div>
         </div>
 
@@ -214,136 +115,53 @@
       <h2 onclick="toggleMenu(this)">🌭 Hot Dogs</h2>
       <div class="platos" style="display:none;">
 
-        <div class="item">
+        <div class="item" data-item-key="hotdogclasico">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HotDogClasicoGondola" value="Hot Dog Clásico Góndola" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Clásico Góndola</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="16500">Solo $16.500</option>
-              <option value="24000" data-combo="1">Combo Mini $24.000</option>
-              <option value="26500" data-combo="1">Combo Personal $26.500</option>
-              <option value="28000" data-combo="1">Combo Súper $28.000</option>
-<option value="86500">Familiar $86.500</option>
-            </select>
-            <input type="number" class="cantidad" name="HotDogClasicoGondolaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HotDogClasicoGondola" value="Hot Dog Clásico Góndola" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Clásico Góndola</span></label>
+            <input type="number" class="cantidad" name="HotDogClasicoGondolaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="mejora-wrap" style="display:none;">
-            <label class="mejora-label">🌶️ ¿Cambiar la salchicha por chorizo artesanal? (+$5.000 c/u)</label>
-          </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
-          <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hot-dpg-clasico-gondola.png" alt="Hot Dog Clásico Góndola">Salchicha americana Zenú rellena de carne molida y recubierta de tocineta, pan fresco, cebolla, piña en trozos, mucho queso doble crema gratinado y salsas. Mejora: +$5.000 cambia la salchicha por chorizo artesanal santarrosano. Combo Familiar: 4 hot dogs + jarra de 1.5 Lts o limonada + 2 porciones ($86.500).</div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
+          <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hot-dpg-clasico-gondola.png" alt="Hot Dog Clásico Góndola">Salchicha americana Zenú rellena de carne molida y recubierta de tocineta, pan fresco, cebolla, piña en trozos, mucho queso doble crema gratinado y salsas.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="hotdogmexicano">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadMexicano" value="Hot Dog Especialidad Mexicano" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Mexicano</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="18500">Solo $18.500</option>
-              <option value="26000" data-combo="1">Combo Mini $26.000</option>
-              <option value="28500" data-combo="1">Combo Personal $28.500</option>
-              <option value="30000" data-combo="1">Combo Súper $30.000</option>
-            </select>
-            <input type="number" class="cantidad" name="HotDogEspecialidadMexicanoCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadMexicano" value="Hot Dog Especialidad Mexicano" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Mexicano</span></label>
+            <input type="number" class="cantidad" name="HotDogEspecialidadMexicanoCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="mejora-wrap" style="display:none;">
-            <label class="mejora-label">🌶️ ¿Cambiar la salchicha por chorizo artesanal? (+$5.000 c/u)</label>
-          </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hot-dog-especial-mexicano.png" alt="Especialidad Mexicano">Salchicha Góndola, queso doble crema gratinado, pan fresco, guacamole al estilo mexicano, jalapeños, totopos y cebolla picada.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="hotdogcheesepower">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadCheesePower" value="Hot Dog Especialidad Cheese Power" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Cheese Power</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="19500">Solo $19.500</option>
-              <option value="27000" data-combo="1">Combo Mini $27.000</option>
-              <option value="29500" data-combo="1">Combo Personal $29.500</option>
-              <option value="31000" data-combo="1">Combo Súper $31.000</option>
-            </select>
-            <input type="number" class="cantidad" name="HotDogEspecialidadCheesePowerCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadCheesePower" value="Hot Dog Especialidad Cheese Power" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Cheese Power</span></label>
+            <input type="number" class="cantidad" name="HotDogEspecialidadCheesePowerCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="mejora-wrap" style="display:none;">
-            <label class="mejora-label">🌶️ ¿Cambiar la salchicha por chorizo artesanal? (+$5.000 c/u)</label>
-          </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hot-dog-especialidad-chesse-powerd.png" alt="Especialidad Cheese Power">Salchicha Góndola, queso doble crema gratinado, queso cheddar, queso campesino, pan fresco y cebolla picada.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="hotdogchili">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadChiliDeRes" value="Hot Dog Especialidad Chili de Res" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Especialidad Chili de Res</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="19500">Solo $19.500</option>
-              <option value="27000" data-combo="1">Combo Mini $27.000</option>
-              <option value="29500" data-combo="1">Combo Personal $29.500</option>
-              <option value="31000" data-combo="1">Combo Súper $31.000</option>
-            </select>
-            <input type="number" class="cantidad" name="HotDogEspecialidadChiliDeResCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="HotDogEspecialidadChiliDeRes" value="Hot Dog Especialidad Chili de Res" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Especialidad Chili de Res</span></label>
+            <input type="number" class="cantidad" name="HotDogEspecialidadChiliDeResCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="mejora-wrap" style="display:none;">
-            <label class="mejora-label">🌶️ ¿Cambiar la salchicha por chorizo artesanal? (+$5.000 c/u)</label>
-          </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/hot-dog-especialidad-chilli-de-res.png" alt="Especialidad Chili de Res">Salchicha Góndola, salsa chili (frijol, chorizo y tocineta), trocitos de chorizo, maíz tierno, totopos, cabellos de ángel, pan fresco y queso doble crema gratinado.</div>
         </div>
 
-      <div class="item">
+      <div class="item" data-item-key="choripan">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="ChoripanEstiloArgentino" value="Choripán al Estilo Argentino" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Choripán Estilo Argentino</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="13500">Solo $13.500</option>
-              <option value="21000" data-combo="1">Combo Mini $21.000</option>
-              <option value="23500" data-combo="1">Combo Personal $23.500</option>
-              <option value="25000" data-combo="1">Combo Súper $25.000</option>
-            </select>
-            <input type="number" class="cantidad" name="ChoripanEstiloArgentinoCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="ChoripanEstiloArgentino" value="Choripán al Estilo Argentino" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Choripán Estilo Argentino</span></label>
+            <input type="number" class="cantidad" name="ChoripanEstiloArgentinoCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/choripan-estilo-argentino.png" alt="Choripán">Chorizo artesanal santarrosano, pan fresco y chimichurri al estilo argentino.</div>
         </div>
 
@@ -382,40 +200,23 @@
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/chorizo-con-papas.png" alt="Chorizo con Papa">Chorizo santarrosano artesanal acompañado de papa francesa y ensalada.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="burrito">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="BurritoMexicanoGondola" value="Burrito Mexicano Góndola" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Burrito Mexicano Góndola</span></label>
-            <select class="tamano" onchange="calcularTotal(); toggleGuarnicion(this)">
-              <option value="17000">Solo $17.000</option>
-              <option value="24500" data-combo="1">Combo Mini $24.500</option>
-              <option value="27000" data-combo="1">Combo Personal $27.000</option>
-              <option value="28500" data-combo="1">Combo Súper $28.500</option>
-            </select>
-            <input type="number" class="cantidad" name="BurritoMexicanoGondolaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="BurritoMexicanoGondola" value="Burrito Mexicano Góndola" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Burrito Mexicano Góndola</span></label>
+            <input type="number" class="cantidad" name="BurritoMexicanoGondolaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
-          <div class="guarnicion-wrap" style="display:none;">
-            <label>🍟 Elige tu guarnición:</label>
-            <select class="guarnicion">
-              <option value="">-- Selecciona --</option>
-              <option>Papa a la francesa</option>
-              <option>Yuca frita</option>
-              <option>Chips de plátano</option>
-              <option>Papas en casquitos</option>
-            </select>
-          </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/burrito-mexicano-gondola.png" alt="Burrito Mexicano Góndola">Carne de res molida ahumada, maíz tierno, arroz, salsa chili, queso fundido, guacamole, crema de leche, pico de gallo y totopos.</div>
         </div>
 
-        <div class="item">
+        <div class="item" data-item-key="mazorcada">
           <div class="item-linea">
-            <label><input type="checkbox" class="check-plato" name="Mazorcada" value="Mazorcada" onchange="toggleCantidad(this); toggleDescripcion(this)"><span class="nombre-txt">Mazorcada</span></label>
-            <select class="tamano" onchange="calcularTotal()">
-              <option value="18000">Mediana $18.000</option>
-              <option value="20000">Agrandada $20.000</option>
-            </select>
-            <span class="precio"></span>
-            <input type="number" class="cantidad" name="MazorcadaCantidad" value="0" min="0" disabled onchange="calcularTotal()">
+            <label><input type="checkbox" class="check-plato" name="Mazorcada" value="Mazorcada" onchange="toggleCantidad(this); toggleDescripcion(this); actualizarUnidadesVariante(this); mostrarAvisoVariante(this)"><span class="nombre-txt">Mazorcada</span></label>
+            <input type="number" class="cantidad" name="MazorcadaCantidad" value="0" min="0" disabled oninput="actualizarUnidadesVariante(this)" onchange="actualizarUnidadesVariante(this)">
           </div>
+          <div class="aviso-variante">☝️ Elige tu tamaño</div>
+          <div class="unidades-variante"></div>
           <div class="descripcion" style="display:none;"><img class="foto-plato" src="imagenes/mazorcada.png" alt="Mazorcada">Patacón, papa a la francesa, maíz tierno, tocineta, carne de res, pollo o mixta y salsa de la casa.</div>
         </div>
 

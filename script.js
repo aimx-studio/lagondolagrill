@@ -185,6 +185,284 @@ function obtenerNumeroWhatsApp(){
   }
   actualizarTextosCombo();
 
+  const VARIANTES_ITEMS = {
+    clasica: [
+      { id: "solo", label: "Solo", precio: 11000 },
+      { id: "mini", label: "Combo Mini", precio: 18500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 21000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 22500, guarniciones: 3, ml: 600 },
+      { id: "familiar", label: "Familiar", precio: 64500, nota: "4 hamburguesas + jarra de 1.5 Lts o limonada + 2 porciones" }
+    ],
+    criolla: [
+      { id: "solo", label: "Solo", precio: 14800 },
+      { id: "mini", label: "Combo Mini", precio: 22300, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 24800, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 26300, guarniciones: 3, ml: 600 }
+    ],
+    parrillera: [
+      { id: "solo", label: "Solo", precio: 16500 },
+      { id: "mini", label: "Combo Mini", precio: 23500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 26000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 27500, guarniciones: 3, ml: 600 }
+    ],
+    cheesepower: [
+      { id: "solo", label: "Solo", precio: 17000 },
+      { id: "mini", label: "Combo Mini", precio: 24500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 27000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 28500, guarniciones: 3, ml: 600 }
+    ],
+    doblecarne: [
+      { id: "solo", label: "Solo", precio: 19000 },
+      { id: "mini", label: "Combo Mini", precio: 26500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 29000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 30500, guarniciones: 3, ml: 600 }
+    ],
+    mexicana: [
+      { id: "solo", label: "Solo", precio: 21000 },
+      { id: "mini", label: "Combo Mini", precio: 28500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 31000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 32500, guarniciones: 3, ml: 600 }
+    ],
+    especialidadgondola: [
+      { id: "solo", label: "Solo", precio: 23000 },
+      { id: "mini", label: "Combo Mini", precio: 30500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 33000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 34500, guarniciones: 3, ml: 600 }
+    ],
+    hotdogclasico: [
+      { id: "solo", label: "Solo", precio: 16500, permiteChorizo: true },
+      { id: "mini", label: "Combo Mini", precio: 24000, guarniciones: 1, ml: 250, permiteChorizo: true },
+      { id: "personal", label: "Combo Personal", precio: 26500, guarniciones: 2, ml: 400, permiteChorizo: true },
+      { id: "super", label: "Combo Súper", precio: 28000, guarniciones: 3, ml: 600, permiteChorizo: true },
+      { id: "familiar", label: "Familiar", precio: 86500, nota: "4 hot dogs + jarra de 1.5 Lts o limonada + 2 porciones" }
+    ],
+    hotdogmexicano: [
+      { id: "solo", label: "Solo", precio: 18500, permiteChorizo: true },
+      { id: "mini", label: "Combo Mini", precio: 26000, guarniciones: 1, ml: 250, permiteChorizo: true },
+      { id: "personal", label: "Combo Personal", precio: 28500, guarniciones: 2, ml: 400, permiteChorizo: true },
+      { id: "super", label: "Combo Súper", precio: 30000, guarniciones: 3, ml: 600, permiteChorizo: true }
+    ],
+    hotdogcheesepower: [
+      { id: "solo", label: "Solo", precio: 19500, permiteChorizo: true },
+      { id: "mini", label: "Combo Mini", precio: 27000, guarniciones: 1, ml: 250, permiteChorizo: true },
+      { id: "personal", label: "Combo Personal", precio: 29500, guarniciones: 2, ml: 400, permiteChorizo: true },
+      { id: "super", label: "Combo Súper", precio: 31000, guarniciones: 3, ml: 600, permiteChorizo: true }
+    ],
+    hotdogchili: [
+      { id: "solo", label: "Solo", precio: 19500, permiteChorizo: true },
+      { id: "mini", label: "Combo Mini", precio: 27000, guarniciones: 1, ml: 250, permiteChorizo: true },
+      { id: "personal", label: "Combo Personal", precio: 29500, guarniciones: 2, ml: 400, permiteChorizo: true },
+      { id: "super", label: "Combo Súper", precio: 31000, guarniciones: 3, ml: 600, permiteChorizo: true }
+    ],
+    choripan: [
+      { id: "solo", label: "Solo", precio: 13500 },
+      { id: "mini", label: "Combo Mini", precio: 21000, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 23500, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 25000, guarniciones: 3, ml: 600 }
+    ],
+    burrito: [
+      { id: "solo", label: "Solo", precio: 17000 },
+      { id: "mini", label: "Combo Mini", precio: 24500, guarniciones: 1, ml: 250 },
+      { id: "personal", label: "Combo Personal", precio: 27000, guarniciones: 2, ml: 400 },
+      { id: "super", label: "Combo Súper", precio: 28500, guarniciones: 3, ml: 600 }
+    ],
+    mazorcada: [
+      { id: "mediana", label: "Mediana", precio: 18000 },
+      { id: "agrandada", label: "Agrandada", precio: 20000 }
+    ]
+  };
+
+  const GUARNICIONES_LISTA_VARIANTE = ["Papa a la francesa", "Yuca frita", "Chips de plátano", "Papas en casquitos"];
+
+  let unidadesVarianteContador = 0;
+
+  // Muestra "Desde $X" en los platos con selector de tamaño/combo, para que
+  // se vea un precio de referencia aunque el precio real dependa de lo que elija.
+  function inicializarPreciosVariante(){
+    document.querySelectorAll(".item[data-item-key]").forEach(item => {
+      if (item.querySelector(".precio-variante")) return;
+      const itemKey = item.dataset.itemKey;
+      const variantes = VARIANTES_ITEMS[itemKey];
+      if (!variantes || !variantes.length) return;
+      const minPrecio = Math.min(...variantes.map(v => v.precio));
+      const cantidadInput = item.querySelector(".item-linea input.cantidad");
+      if (!cantidadInput) return;
+      const span = document.createElement("span");
+      span.className = "precio-variante";
+      span.textContent = `Desde $${minPrecio.toLocaleString("es-CO")}`;
+      cantidadInput.parentNode.insertBefore(span, cantidadInput);
+    });
+  }
+
+  // Agrega un campo de observaciones a todos los platos que NO tengan ya
+  // observación por unidad (los de combo/tamaño) y que no sean bebidas.
+  function inicializarObservacionesSimples(){
+    document.querySelectorAll(".item").forEach(item => {
+      if (item.dataset.itemKey) return;
+      if (item.querySelector(".observaciones-simple")) return;
+      const seccion = item.closest(".menu-section");
+      const tituloSeccion = seccion?.querySelector("h2")?.textContent || "";
+      if (tituloSeccion.includes("Bebidas")) return;
+
+      const bloque = document.createElement("div");
+      bloque.innerHTML = `<label class="obs-label-variante">📝 Observación:</label><textarea class="observaciones-unidad observaciones-simple" rows="2" placeholder="Ej: sin cebolla, extra picante..."></textarea>`;
+
+      let desc = item.querySelector(".descripcion");
+      if (!desc){
+        desc = document.createElement("div");
+        desc.className = "descripcion";
+        desc.style.display = "none";
+        item.appendChild(desc);
+      }
+      desc.appendChild(bloque);
+    });
+  }
+
+  inicializarPreciosVariante();
+  inicializarObservacionesSimples();
+
+  function construirBloqueVariante(itemKey, unidad){
+    unidadesVarianteContador++;
+    const prefijo = `${itemKey}_u${unidad}_${unidadesVarianteContador}`;
+    const variantes = VARIANTES_ITEMS[itemKey];
+    const pills = variantes.map(v =>
+      `<label class="variante-pill" data-variante="${v.id}">
+         <input type="radio" name="${prefijo}_variante" value="${v.id}" onchange="seleccionarVariante(this)">
+         ${v.label} — $${v.precio.toLocaleString("es-CO")}
+       </label>`
+    ).join("");
+
+    return `<div class="unidad-variante" data-unidad="${unidad}" data-item-key="${itemKey}">
+      <div class="variante-pills">${pills}</div>
+      <div class="variante-detalle" style="display:none;"></div>
+      <div class="guarnicion-wrap-variante"></div>
+      <div class="mejora-wrap-variante"></div>
+      <label class="obs-label-variante">📝 Observación Plato ${unidad}:</label>
+      <textarea class="observaciones-unidad" rows="2" placeholder="Ej: sin cebolla, extra picante..."></textarea>
+    </div>`;
+  }
+
+  function mostrarAvisoVariante(checkbox){
+    if (!checkbox.checked) return;
+    const item = checkbox.closest(".item");
+    const aviso = item?.querySelector(".aviso-variante");
+    if (!aviso) return;
+    aviso.style.display = "block";
+    aviso.style.animation = "none";
+    void aviso.offsetWidth;
+    aviso.style.animation = "avisoParpadeo 2.6s ease forwards";
+    setTimeout(() => { aviso.style.display = "none"; }, 2600);
+  }
+
+  function actualizarUnidadesVariante(el){
+    const item = el.closest(".item");
+    if (!item) return;
+    const itemKey = item.dataset.itemKey;
+    const cont = item.querySelector(".unidades-variante");
+    const cantidadInput = item.querySelector(".cantidad");
+    const cantidad = Number(cantidadInput.value) || 0;
+
+    let bloques = cont.querySelectorAll(".unidad-variante");
+    while (bloques.length > cantidad){
+      cont.removeChild(cont.lastElementChild);
+      bloques = cont.querySelectorAll(".unidad-variante");
+    }
+    for (let i = bloques.length + 1; i <= cantidad; i++){
+      cont.insertAdjacentHTML("beforeend", construirBloqueVariante(itemKey, i));
+    }
+
+    actualizarTabsVariante(item, cont, cantidad);
+    calcularTotal();
+  }
+
+  function actualizarTabsVariante(item, cont, cantidad){
+    let nav = item.querySelector(".unidad-tabs-variante");
+    let hint = item.querySelector(".tabs-hint-variante");
+    const bloques = Array.from(cont.querySelectorAll(".unidad-variante"));
+
+    if (cantidad <= 1){
+      if (nav) nav.remove();
+      if (hint) hint.remove();
+      bloques.forEach(b => b.style.display = "block");
+      return;
+    }
+
+    if (!hint){
+      hint = document.createElement("p");
+      hint.className = "tabs-hint-variante";
+      hint.textContent = "👉 Toca cada pestaña para elegir diferente en cada plato";
+      cont.parentNode.insertBefore(hint, cont);
+    }
+    if (!nav){
+      nav = document.createElement("div");
+      nav.className = "unidad-tabs-variante";
+      cont.parentNode.insertBefore(nav, cont);
+    }
+
+    const activaPrevia = nav.querySelector(".unidad-tab-variante.activa");
+    const unidadActiva = Math.min(activaPrevia ? Number(activaPrevia.dataset.unidad) : 1, cantidad);
+
+    nav.innerHTML = bloques.map((b, idx) => {
+      const u = idx + 1;
+      return `<button type="button" class="unidad-tab-variante${u === unidadActiva ? ' activa' : ''}" data-unidad="${u}" onclick="mostrarUnidadVariante(this)">Plato ${u}</button>`;
+    }).join("");
+
+    bloques.forEach((b, idx) => {
+      b.style.display = (idx + 1 === unidadActiva) ? "block" : "none";
+    });
+  }
+
+  function mostrarUnidadVariante(btn){
+    const item = btn.closest(".item");
+    const unidad = btn.dataset.unidad;
+    item.querySelectorAll(".unidad-tab-variante").forEach(t => t.classList.toggle("activa", t === btn));
+    item.querySelectorAll(".unidad-variante").forEach(b => {
+      b.style.display = (b.dataset.unidad === unidad) ? "block" : "none";
+    });
+  }
+
+  function seleccionarVariante(radio){
+    const bloque = radio.closest(".unidad-variante");
+    const itemKey = bloque.dataset.itemKey;
+    const varianteId = radio.value;
+    const variante = VARIANTES_ITEMS[itemKey].find(v => v.id === varianteId);
+
+    bloque.querySelectorAll(".variante-pill").forEach(p => {
+      p.classList.toggle("activa", p.dataset.variante === varianteId);
+    });
+
+    const detalle = bloque.querySelector(".variante-detalle");
+    const guarnicionWrap = bloque.querySelector(".guarnicion-wrap-variante");
+
+    if (variante.guarniciones){
+      detalle.style.display = "block";
+      detalle.textContent = `🥤 Incluye gaseosa de ${variante.ml} ml (o limonada / té frío con $1.000 menos) + ${variante.guarniciones} ${variante.guarniciones === 1 ? "guarnición" : "guarniciones"}.`;
+      guarnicionWrap.innerHTML = Array.from({length: variante.guarniciones}, (_, i) =>
+        `<select class="guarnicion-variante">
+           <option value="">-- Selecciona guarnición ${i+1} --</option>
+           ${GUARNICIONES_LISTA_VARIANTE.map(g => `<option>${g}</option>`).join("")}
+         </select>`
+      ).join("");
+    } else if (variante.nota){
+      detalle.style.display = "block";
+      detalle.textContent = `ℹ️ ${variante.nota}`;
+      guarnicionWrap.innerHTML = "";
+    } else {
+      detalle.style.display = "none";
+      guarnicionWrap.innerHTML = "";
+    }
+
+    const mejoraWrap = bloque.querySelector(".mejora-wrap-variante");
+    if (variante.permiteChorizo){
+      mejoraWrap.innerHTML = `<label class="mejora-fila-variante"><input type="checkbox" class="check-mejora-chorizo-variante" onchange="calcularTotal()"> 🌶️ Cambiar la salchicha por chorizo artesanal (+$5.000)</label>`;
+    } else {
+      mejoraWrap.innerHTML = "";
+    }
+
+    bloque.dataset.precioSeleccionado = variante.precio;
+    calcularTotal();
+  }
+
   // al cambiar la cantidad, se rehacen los bloques de guarniciones y de chorizo
   document.addEventListener("input", function(e){
     if (!e.target.classList || !e.target.classList.contains("cantidad")) return;
@@ -223,6 +501,18 @@ function obtenerNumeroWhatsApp(){
       const cantidadInput = item.querySelector(".cantidad");
       const cantidad = Number(cantidadInput?.value) || 0;
       if (cantidad <= 0) return;
+
+      const contVariante = item.querySelector(".unidades-variante");
+      if (contVariante){
+        contVariante.querySelectorAll(".unidad-variante").forEach(bloque => {
+          subtotal += Number(bloque.dataset.precioSeleccionado) || 0;
+          if (bloque.querySelector(".check-mejora-chorizo-variante")?.checked){
+            subtotal += 5000;
+          }
+        });
+        if (item.dataset.tipo === "bandeja") unidadesEmpaque += cantidad;
+        return;
+      }
 
       let precio = 0;
       const tamanoSel = item.querySelector(".tamano");
@@ -313,6 +603,39 @@ function obtenerNumeroWhatsApp(){
       const item = cb.closest(".item");
       const cantidad = Number(item.querySelector(".cantidad")?.value) || 0;
       if (cantidad <= 0) return;
+
+      const contVariante = item.querySelector(".unidades-variante");
+      if (contVariante){
+        const unidadesInfo = Array.from(contVariante.querySelectorAll(".unidad-variante")).map(bloque => {
+          const radioMarcado = bloque.querySelector('input[type="radio"]:checked');
+          const varianteId = radioMarcado ? radioMarcado.value : null;
+          const variante = varianteId ? VARIANTES_ITEMS[bloque.dataset.itemKey].find(v => v.id === varianteId) : null;
+          const guarniciones = Array.from(bloque.querySelectorAll(".guarnicion-variante")).map(s => s.value).filter(Boolean);
+          const chorizoVariante = bloque.querySelector(".check-mejora-chorizo-variante")?.checked;
+          const obs = bloque.querySelector(".observaciones-unidad")?.value.trim();
+          const partes = [];
+          if (variante) partes.push(variante.label);
+          if (guarniciones.length) partes.push(`Guarnición: ${guarniciones.join(" + ")}`);
+          if (chorizoVariante) partes.push("Chorizo artesanal (+$5.000)");
+          if (obs) partes.push(`Obs: ${obs}`);
+          return { clave: JSON.stringify(partes), partes };
+        });
+
+        const grupos = [];
+        unidadesInfo.forEach(u => {
+          const existente = grupos.find(g => g.clave === u.clave);
+          if (existente) existente.cantidad++;
+          else grupos.push({ clave: u.clave, partes: u.partes, cantidad: 1 });
+        });
+
+        grupos.forEach(g => {
+          let linea = `• ${g.cantidad} × ${cb.value}`;
+          if (g.partes.length) linea += ` (${g.partes.join(" - ")})`;
+          platos.push(linea);
+        });
+        return;
+      }
+
       let linea = `• ${cantidad} × ${cb.value}`;
       const tamanoSel = item.querySelector(".tamano");
       if (tamanoSel){
@@ -337,11 +660,28 @@ function obtenerNumeroWhatsApp(){
         });
         linea += ` - Guarnición: ${partes.join(" | ")}`;
       }
+      const obsSimple = item.querySelector(".observaciones-simple")?.value.trim();
+      if (obsSimple) linea += ` - Obs: ${obsSimple}`;
       platos.push(linea);
     });
 
     if (platos.length === 0){
       alert("Por favor selecciona al menos un producto.");
+      return;
+    }
+
+    let varianteFaltante = false;
+    document.querySelectorAll(".unidades-variante .unidad-variante").forEach(bloque => {
+      const radioMarcado = bloque.querySelector('input[type="radio"]:checked');
+      if (!radioMarcado){ varianteFaltante = true; return; }
+      const variante = VARIANTES_ITEMS[bloque.dataset.itemKey].find(v => v.id === radioMarcado.value);
+      if (variante && variante.guarniciones){
+        const selects = bloque.querySelectorAll(".guarnicion-variante");
+        if ([...selects].some(s => !s.value)) varianteFaltante = true;
+      }
+    });
+    if (varianteFaltante){
+      alert("Por favor elige la opción (Solo/Combo) y la guarnición de cada plato antes de enviar.");
       return;
     }
 
