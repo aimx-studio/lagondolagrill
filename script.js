@@ -1,6 +1,12 @@
 const NUMERO_WHATSAPP_MEDIODIA = "573102730055"; // 11:45am - 4:00pm
 const NUMERO_WHATSAPP_TARDE = "573114667501"; // 4:00pm - 12:00am
 
+function efectivoDisponibleAhora(){
+  const ahora = new Date();
+  const minutos = ahora.getHours() * 60 + ahora.getMinutes();
+  return minutos >= 12 * 60 && minutos < 22 * 60; // 12:00pm - 10:00pm
+}
+
 function obtenerNumeroWhatsApp(){
   const ahora = new Date();
   const minutos = ahora.getHours() * 60 + ahora.getMinutes();
@@ -574,7 +580,7 @@ function obtenerNumeroWhatsApp(){
 
     const opcionEfectivo = document.getElementById("opcionEfectivo");
     const tipoPagoSelect = document.getElementById("tipoPago");
-    const permiteEfectivo = (tipo === "Comer dentro del local");
+    const permiteEfectivo = efectivoDisponibleAhora();
     opcionEfectivo.hidden = !permiteEfectivo;
     opcionEfectivo.disabled = !permiteEfectivo;
     if (!permiteEfectivo && tipoPagoSelect.value === "Efectivo"){
@@ -590,6 +596,8 @@ function obtenerNumeroWhatsApp(){
     document.getElementById("efectivoField").style.display = (tipo === "Efectivo") ? "block" : "none";
     document.getElementById("avisoPagoParcial").style.display = tipo ? "block" : "none";
   }
+
+  toggleEntrega();
 
   let enviando = false;
 
