@@ -755,6 +755,10 @@ function obtenerNumeroWhatsApp(){
 
     const urlFormulario = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScvb1-6YGHaLol6SshDqVPVm8zu25T2e_XUsItnUiH_0m0Hzg/formResponse';
 
+    const urlWhatsApp = "https://wa.me/" + obtenerNumeroWhatsApp() + "?text=" + encodeURIComponent(mensaje);
+    let redirigido = false;
+    const irAWhatsApp = () => { if (redirigido) return; redirigido = true; window.location.href = urlWhatsApp; };
+
     fetch(urlFormulario, {
       method: 'POST',
       mode: 'no-cors',
@@ -765,12 +769,12 @@ function obtenerNumeroWhatsApp(){
       if (navigator.sendBeacon){
         navigator.sendBeacon(urlFormulario, datosPedido);
       }
-    });
+    }).finally(irAWhatsApp);
 
     const btn = document.querySelector(".btn");
     btn.disabled = true;
     enviando = true;
     setTimeout(() => { btn.disabled = false; enviando = false; }, 5000);
 
-    window.location.href = "https://wa.me/" + obtenerNumeroWhatsApp() + "?text=" + encodeURIComponent(mensaje);
+    setTimeout(irAWhatsApp, 1500);
   });
